@@ -7,6 +7,7 @@ from fastapi.responses import RedirectResponse
 
 from app.core.config import settings
 from app.core.database import create_all_tables
+from app.modules.auth.router import router as auth_router
 
 
 @asynccontextmanager
@@ -31,6 +32,7 @@ app.add_middleware(
 )
 
 api_router = APIRouter(prefix="/api/v1")
+api_router.include_router(auth_router)
 
 app.include_router(api_router)
 
