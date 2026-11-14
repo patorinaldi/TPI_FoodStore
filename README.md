@@ -5,6 +5,8 @@ Sistema de pedidos de comida para el Trabajo Práctico Integrador de Programaci�
 - **Backend:** FastAPI + SQLModel + PostgreSQL, arquitectura en capas con Unit of Work y autenticación JWT en cookie HttpOnly.
 - **Frontend:** React + TypeScript + Vite + Tailwind CSS, con TanStack Query, Form y Table, Zustand y Axios.
 
+**Repositorio:** https://github.com/patorinaldi/TPI_FoodStore
+
 ## Estructura
 
 ```
