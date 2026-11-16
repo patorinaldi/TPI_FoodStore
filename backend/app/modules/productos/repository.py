@@ -14,6 +14,12 @@ class ProductoRepository(BaseRepository[Producto]):
     def get_by_nombre(self, nombre: str) -> Producto | None:
         return self.session.exec(select(Producto).where(Producto.nombre == nombre)).first()
 
+    def get_by_id_for_update(self, producto_id: int) -> Producto | None:
+        # FOR UPDATE bloquea la fila hasta el commit: dos pedidos simultáneos no pueden
+        # leer el mismo stock y venderlo dos veces. SQLite lo ignora.
+        stmt = select(Producto).where(Producto.id == producto_id).with_for_update()
+        return self.session.exec(stmt).first()
+
     def search(
         self,
         search: str | None = None,
