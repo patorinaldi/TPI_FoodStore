@@ -1,7 +1,13 @@
-from datetime import datetime
+from datetime import date, datetime, time
 
 from app.modules.pedidos.models import DetallePedido, Pedido
-from app.modules.pedidos.schemas import EstadoPedido, PedidoCreate, PedidoRead, PedidosPaginados
+from app.modules.pedidos.schemas import (
+    EstadoPedido,
+    PedidoCreate,
+    PedidoRead,
+    PedidosPaginados,
+    ResumenPedidos,
+)
 from app.modules.pedidos.unit_of_work import PedidoUnitOfWork
 from app.modules.productos.service import ProductoNoEncontrado
 from app.modules.usuarios.schemas import UserPublic
@@ -139,6 +145,21 @@ class PedidoService:
             self._restituir_stock(uow, pedido)
             self._aplicar_estado(pedido, EstadoPedido.CANCELADO)
             return PedidoRead.model_validate(pedido)
+
+    def resumen(self) -> ResumenPedidos:
+        with self.uow as uow:
+            conteos = uow.pedidos.count_by_estado()
+            inicio_de_hoy = datetime.combine(date.today(), time.min)
+            return ResumenPedidos(
+                pendientes=conteos.get(EstadoPedido.PENDIENTE.value, 0),
+                en_preparacion=conteos.get(EstadoPedido.EN_PREPARACION.value, 0),
+                entregados=conteos.get(EstadoPedido.ENTREGADO.value, 0),
+                cancelados=conteos.get(EstadoPedido.CANCELADO.value, 0),
+                pedidos_hoy=uow.pedidos.count_desde(inicio_de_hoy),
+                ingresos_entregados=round(
+                    uow.pedidos.sum_total_por_estado(EstadoPedido.ENTREGADO.value), 2
+                ),
+            )
 
     @staticmethod
     def _obtener(uow: PedidoUnitOfWork, pedido_id: int) -> Pedido:
