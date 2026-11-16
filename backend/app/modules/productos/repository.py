@@ -11,6 +11,9 @@ class ProductoRepository(BaseRepository[Producto]):
     def __init__(self, session: Session) -> None:
         super().__init__(session, Producto)
 
+    def get_by_nombre(self, nombre: str) -> Producto | None:
+        return self.session.exec(select(Producto).where(Producto.nombre == nombre)).first()
+
     def search(
         self,
         search: str | None = None,
