@@ -1,7 +1,8 @@
-import { useMutation, useQueryClient, type QueryClient } from '@tanstack/react-query'
+import { keepPreviousData, useMutation, useQuery, useQueryClient, type QueryClient } from '@tanstack/react-query'
 
 import { CLAVE_PRODUCTOS } from '../../productos/hooks/useProductos'
-import { crearPedido } from '../api/pedidos'
+import { cancelarPedido, crearPedido, listarPedidos } from '../api/pedidos'
+import type { FiltrosPedidos } from '../types/pedido'
 
 export const CLAVE_PEDIDOS = ['pedidos'] as const
 export const CLAVE_RESUMEN = ['resumen'] as const
@@ -15,10 +16,26 @@ function invalidarTrasCambio(queryClient: QueryClient) {
   ])
 }
 
+export function usePedidos(filtros: FiltrosPedidos) {
+  return useQuery({
+    queryKey: [...CLAVE_PEDIDOS, filtros],
+    queryFn: () => listarPedidos(filtros),
+    placeholderData: keepPreviousData,
+  })
+}
+
 export function useCrearPedido() {
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: crearPedido,
+    onSuccess: () => invalidarTrasCambio(queryClient),
+  })
+}
+
+export function useCancelarPedido() {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: cancelarPedido,
     onSuccess: () => invalidarTrasCambio(queryClient),
   })
 }
