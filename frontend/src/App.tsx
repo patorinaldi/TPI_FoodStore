@@ -1,7 +1,15 @@
+import { useEffect } from 'react'
+
+import { AppRouter } from './routes/AppRouter'
+import { useAuthStore } from './store/authStore'
+
 export default function App() {
-  return (
-    <main className="flex min-h-screen items-center justify-center bg-orange-50">
-      <h1 className="text-3xl font-semibold text-orange-700">Food Store</h1>
-    </main>
-  )
+  const checkSession = useAuthStore((s) => s.checkSession)
+
+  // Único useEffect de la app: confirmar contra /auth/me que la cookie sigue vigente.
+  useEffect(() => {
+    void checkSession()
+  }, [checkSession])
+
+  return <AppRouter />
 }
