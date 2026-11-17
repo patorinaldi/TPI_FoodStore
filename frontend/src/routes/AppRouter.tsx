@@ -4,6 +4,7 @@ import LoginPage from '../features/auth/pages/LoginPage'
 import RegisterPage from '../features/auth/pages/RegisterPage'
 import UnauthorizedPage from '../features/auth/pages/UnauthorizedPage'
 import CarritoPage from '../features/pedidos/pages/CarritoPage'
+import CheckoutPage from '../features/pedidos/pages/CheckoutPage'
 import CatalogoPage from '../features/productos/pages/CatalogoPage'
 import { MainLayout } from '../shared/layout/MainLayout'
 import { ProtectedRoute } from './ProtectedRoute'
@@ -20,6 +21,7 @@ export function AppRouter() {
           <Route path="/unauthorized" element={<UnauthorizedPage />} />
 
           <Route element={<ProtectedRoute />}>
+            <Route path="/checkout" element={<CheckoutPage />} />
             <Route path="/mis-pedidos" element={<h1 className="text-2xl font-bold">Mis pedidos</h1>} />
           </Route>
 
