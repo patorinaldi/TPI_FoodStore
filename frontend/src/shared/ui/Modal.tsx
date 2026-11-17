@@ -8,6 +8,10 @@ interface ModalProps {
   ancho?: 'md' | 'lg'
 }
 
+// React solo respeta autoFocus en inputs y botones. Al estar definida fuera del componente, la referencia
+// es estable y React la llama una sola vez al montar el diálogo, así Esc funciona sin tener que hacer click.
+const enfocarAlMontar = (elemento: HTMLDivElement | null) => elemento?.focus()
+
 export function Modal({ abierto, titulo, onCerrar, children, ancho = 'md' }: ModalProps) {
   if (!abierto) return null
 
@@ -21,7 +25,7 @@ export function Modal({ abierto, titulo, onCerrar, children, ancho = 'md' }: Mod
         aria-modal="true"
         aria-labelledby="modal-titulo"
         tabIndex={-1}
-        autoFocus
+        ref={enfocarAlMontar}
         onClick={(e) => e.stopPropagation()}
         onKeyDown={(e) => e.key === 'Escape' && onCerrar()}
         className={`max-h-[90vh] w-full overflow-y-auto rounded-xl bg-white shadow-xl outline-none ${ancho === 'lg' ? 'max-w-2xl' : 'max-w-md'}`}
