@@ -10,6 +10,7 @@ import CheckoutPage from '../features/pedidos/pages/CheckoutPage'
 import MisPedidosPage from '../features/pedidos/pages/MisPedidosPage'
 import AdminProductosPage from '../features/productos/pages/AdminProductosPage'
 import CatalogoPage from '../features/productos/pages/CatalogoPage'
+import AdminUsuariosPage from '../features/usuarios/pages/AdminUsuariosPage'
 import { MainLayout } from '../shared/layout/MainLayout'
 import { ProtectedRoute } from './ProtectedRoute'
 
@@ -33,6 +34,7 @@ export function AppRouter() {
             <Route path="/admin/resumen" element={<AdminResumenPage />} />
             <Route path="/admin/categorias" element={<AdminCategoriasPage />} />
             <Route path="/admin/productos" element={<AdminProductosPage />} />
+            <Route path="/admin/usuarios" element={<AdminUsuariosPage />} />
           </Route>
 
           <Route path="*" element={<Navigate to="/" replace />} />
