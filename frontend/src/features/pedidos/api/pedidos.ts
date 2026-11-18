@@ -1,5 +1,12 @@
 import { api } from '../../../shared/api/axiosInstance'
-import type { FiltrosPedidos, Pedido, PedidoCreate, PedidosPaginados, ResumenPedidos } from '../types/pedido'
+import type {
+  EstadoPedido,
+  FiltrosPedidos,
+  Pedido,
+  PedidoCreate,
+  PedidosPaginados,
+  ResumenPedidos,
+} from '../types/pedido'
 
 export async function crearPedido(pedido: PedidoCreate): Promise<Pedido> {
   const { data } = await api.post<Pedido>('/pedidos', pedido)
@@ -18,5 +25,10 @@ export async function cancelarPedido(id: number): Promise<Pedido> {
 
 export async function obtenerResumen(): Promise<ResumenPedidos> {
   const { data } = await api.get<ResumenPedidos>('/pedidos/resumen')
+  return data
+}
+
+export async function cambiarEstadoPedido(id: number, estado: EstadoPedido): Promise<Pedido> {
+  const { data } = await api.patch<Pedido>(`/pedidos/${id}/estado`, { estado })
   return data
 }

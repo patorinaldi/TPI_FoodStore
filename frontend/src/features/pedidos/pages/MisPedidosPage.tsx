@@ -15,16 +15,9 @@ import { useAuthStore } from '../../../store/authStore'
 import { PedidoDetalle } from '../components/PedidoDetalle'
 import { useCancelarPedido, usePedidos } from '../hooks/usePedidos'
 import type { EstadoPedido, Pedido } from '../types/pedido'
+import { OPCIONES_FILTRO_ESTADO } from '../utils/estados'
 
 const TAMANIO_PAGINA = 5
-
-const FILTROS_ESTADO: { valor: EstadoPedido | ''; texto: string }[] = [
-  { valor: '', texto: 'Todos los estados' },
-  { valor: 'PENDIENTE', texto: 'Pendiente' },
-  { valor: 'EN_PREPARACION', texto: 'En preparación' },
-  { valor: 'ENTREGADO', texto: 'Entregado' },
-  { valor: 'CANCELADO', texto: 'Cancelado' },
-]
 
 interface EstadoNavegacion {
   pedidoCreado?: number
@@ -92,7 +85,7 @@ export default function MisPedidosPage() {
             }}
             className="rounded-lg border border-stone-300 bg-white px-3 py-2 text-sm outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-200"
           >
-            {FILTROS_ESTADO.map((f) => (
+            {OPCIONES_FILTRO_ESTADO.map((f) => (
               <option key={f.valor} value={f.valor}>
                 {f.texto}
               </option>

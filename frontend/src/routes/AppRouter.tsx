@@ -4,6 +4,7 @@ import AdminCategoriasPage from '../features/categorias/pages/AdminCategoriasPag
 import LoginPage from '../features/auth/pages/LoginPage'
 import RegisterPage from '../features/auth/pages/RegisterPage'
 import UnauthorizedPage from '../features/auth/pages/UnauthorizedPage'
+import AdminPedidosPage from '../features/pedidos/pages/AdminPedidosPage'
 import AdminResumenPage from '../features/pedidos/pages/AdminResumenPage'
 import CarritoPage from '../features/pedidos/pages/CarritoPage'
 import CheckoutPage from '../features/pedidos/pages/CheckoutPage'
@@ -34,6 +35,7 @@ export function AppRouter() {
             <Route path="/admin/resumen" element={<AdminResumenPage />} />
             <Route path="/admin/categorias" element={<AdminCategoriasPage />} />
             <Route path="/admin/productos" element={<AdminProductosPage />} />
+            <Route path="/admin/pedidos" element={<AdminPedidosPage />} />
             <Route path="/admin/usuarios" element={<AdminUsuariosPage />} />
           </Route>
 
