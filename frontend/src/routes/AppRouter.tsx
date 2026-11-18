@@ -3,6 +3,7 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import LoginPage from '../features/auth/pages/LoginPage'
 import RegisterPage from '../features/auth/pages/RegisterPage'
 import UnauthorizedPage from '../features/auth/pages/UnauthorizedPage'
+import AdminResumenPage from '../features/pedidos/pages/AdminResumenPage'
 import CarritoPage from '../features/pedidos/pages/CarritoPage'
 import CheckoutPage from '../features/pedidos/pages/CheckoutPage'
 import MisPedidosPage from '../features/pedidos/pages/MisPedidosPage'
@@ -27,7 +28,7 @@ export function AppRouter() {
           </Route>
 
           <Route element={<ProtectedRoute roles={['admin']} />}>
-            <Route path="/admin/resumen" element={<h1 className="text-2xl font-bold">Resumen</h1>} />
+            <Route path="/admin/resumen" element={<AdminResumenPage />} />
           </Route>
 
           <Route path="*" element={<Navigate to="/" replace />} />

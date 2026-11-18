@@ -1,7 +1,7 @@
 import { keepPreviousData, useMutation, useQuery, useQueryClient, type QueryClient } from '@tanstack/react-query'
 
 import { CLAVE_PRODUCTOS } from '../../productos/hooks/useProductos'
-import { cancelarPedido, crearPedido, listarPedidos } from '../api/pedidos'
+import { cancelarPedido, crearPedido, listarPedidos, obtenerResumen } from '../api/pedidos'
 import type { FiltrosPedidos } from '../types/pedido'
 
 export const CLAVE_PEDIDOS = ['pedidos'] as const
@@ -22,6 +22,10 @@ export function usePedidos(filtros: FiltrosPedidos) {
     queryFn: () => listarPedidos(filtros),
     placeholderData: keepPreviousData,
   })
+}
+
+export function useResumenPedidos() {
+  return useQuery({ queryKey: CLAVE_RESUMEN, queryFn: obtenerResumen })
 }
 
 export function useCrearPedido() {
