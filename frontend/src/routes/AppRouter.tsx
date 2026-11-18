@@ -1,19 +1,22 @@
+import { lazy } from 'react'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 
-import AdminCategoriasPage from '../features/categorias/pages/AdminCategoriasPage'
 import LoginPage from '../features/auth/pages/LoginPage'
 import RegisterPage from '../features/auth/pages/RegisterPage'
 import UnauthorizedPage from '../features/auth/pages/UnauthorizedPage'
-import AdminPedidosPage from '../features/pedidos/pages/AdminPedidosPage'
-import AdminResumenPage from '../features/pedidos/pages/AdminResumenPage'
 import CarritoPage from '../features/pedidos/pages/CarritoPage'
 import CheckoutPage from '../features/pedidos/pages/CheckoutPage'
 import MisPedidosPage from '../features/pedidos/pages/MisPedidosPage'
-import AdminProductosPage from '../features/productos/pages/AdminProductosPage'
 import CatalogoPage from '../features/productos/pages/CatalogoPage'
-import AdminUsuariosPage from '../features/usuarios/pages/AdminUsuariosPage'
 import { MainLayout } from '../shared/layout/MainLayout'
 import { ProtectedRoute } from './ProtectedRoute'
+
+// El panel va en chunks aparte: un cliente nunca descarga el código de las pantallas de administración.
+const AdminResumenPage = lazy(() => import('../features/pedidos/pages/AdminResumenPage'))
+const AdminCategoriasPage = lazy(() => import('../features/categorias/pages/AdminCategoriasPage'))
+const AdminProductosPage = lazy(() => import('../features/productos/pages/AdminProductosPage'))
+const AdminPedidosPage = lazy(() => import('../features/pedidos/pages/AdminPedidosPage'))
+const AdminUsuariosPage = lazy(() => import('../features/usuarios/pages/AdminUsuariosPage'))
 
 export function AppRouter() {
   return (
