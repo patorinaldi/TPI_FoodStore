@@ -1,5 +1,7 @@
 fastapi[standard]==0.115.12
 sqlmodel==0.0.22
+sqlalchemy==2.0.57
+pydantic==2.14.3
 psycopg2-binary==2.9.10
 python-jose[cryptography]==3.5.0
 passlib[bcrypt]==1.7.4
