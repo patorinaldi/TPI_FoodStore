@@ -1,6 +1,8 @@
 from datetime import datetime
 from enum import Enum
+from typing import Annotated
 
+from pydantic import StringConstraints
 from sqlmodel import Field, SQLModel
 
 
@@ -24,7 +26,7 @@ class ItemPedidoCreate(SQLModel):
 class PedidoCreate(SQLModel):
     items: list[ItemPedidoCreate] = Field(min_length=1)
     forma_pago: FormaPago
-    direccion_entrega: str = Field(min_length=5, max_length=200)
+    direccion_entrega: Annotated[str, StringConstraints(strip_whitespace=True, min_length=5, max_length=200)]
     notas: str | None = Field(default=None, max_length=500)
 
 
