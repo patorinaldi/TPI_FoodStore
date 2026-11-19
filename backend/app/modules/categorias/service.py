@@ -32,7 +32,10 @@ class CategoriaService:
     def actualizar(self, categoria_id: int, data: CategoriaUpdate) -> CategoriaRead:
         with self.uow as uow:
             categoria = self._obtener_activa(uow, categoria_id)
-            cambios = data.model_dump(exclude_unset=True, exclude_none=True)
+            cambios = data.model_dump(exclude_unset=True)
+            # Un null explícito borra la descripción; en el nombre, que es obligatorio, se ignora.
+            if cambios.get("nombre", "") is None:
+                del cambios["nombre"]
             if "nombre" in cambios:
                 self._validar_nombre_libre(uow, cambios["nombre"], excluir_id=categoria_id)
             categoria.sqlmodel_update(cambios)

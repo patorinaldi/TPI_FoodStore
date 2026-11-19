@@ -10,6 +10,10 @@ from app.modules.productos.schemas import (
 from app.modules.productos.unit_of_work import ProductoUnitOfWork
 
 
+# En el PUT parcial un null en estos campos se ignora; en descripcion e imagen_url significa "borrar".
+CAMPOS_OBLIGATORIOS = frozenset({"categoria_id", "nombre", "precio_base", "stock", "disponible"})
+
+
 class ProductoNoEncontrado(Exception):
     pass
 
@@ -45,7 +49,11 @@ class ProductoService:
     def actualizar(self, producto_id: int, data: ProductoUpdate) -> ProductoRead:
         with self.uow as uow:
             producto = self._obtener_activo(uow, producto_id)
-            cambios = data.model_dump(exclude_unset=True, exclude_none=True)
+            cambios = {
+                campo: valor
+                for campo, valor in data.model_dump(exclude_unset=True).items()
+                if valor is not None or campo not in CAMPOS_OBLIGATORIOS
+            }
             if "categoria_id" in cambios:
                 self._validar_categoria(uow, cambios["categoria_id"])
             producto.sqlmodel_update(cambios)
