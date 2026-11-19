@@ -132,8 +132,8 @@ export default function AdminCategoriasPage() {
         onConfirmar={() => void confirmarEliminar()}
         onCancelar={() => setAEliminar(null)}
       >
-        ¿Eliminar la categoría <strong>{aEliminar?.nombre}</strong>? Deja de mostrarse en el catálogo, pero el nombre
-        queda reservado.
+        ¿Eliminar la categoría <strong>{aEliminar?.nombre}</strong>? Deja de aparecer en el filtro del catálogo, pero sus
+        productos siguen a la venta hasta que los des de baja, y el nombre queda reservado.
       </DialogoConfirmacion>
     </div>
   )

@@ -70,7 +70,11 @@ export default function MisPedidosPage() {
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
           <h1 className="text-2xl font-bold text-stone-900">Mis pedidos</h1>
-          <p className="text-sm text-stone-500">Seguí el estado de tus compras</p>
+          <p className="text-sm text-stone-500">
+            {usuario?.role === 'admin'
+              ? 'Como administrador ves los pedidos de todos; avanzalos desde el panel'
+              : 'Seguí el estado de tus compras'}
+          </p>
         </div>
         <div className="flex flex-col gap-1">
           <label htmlFor="filtro-estado" className="text-xs font-medium text-stone-600">
